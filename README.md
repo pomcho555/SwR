@@ -1,5 +1,5 @@
 # SwR
-Summarizer with Recommendation
+  Summarizer with Recommendation
 It supply you to get reccommendation of text.
 I'm afraid, it doesn't work well except Japanese text.
 
