@@ -10,7 +10,11 @@ I'm afraid, it doesn't work well except Japanese text.
  1. Python 3.x
  2. WordNetJapanese(http://nlpwww.nict.go.jp/wn-ja/)
  3. goi.csv(http://jhlee.sakura.ne.jp/JEL.html)
- 4. wordnet_python(https://github.com/katryo/wordnet_python)
+ 
+ ### Ohters
+ We use wn_syns as synonym extracter.
+ Here is repository ***(https://github.com/yoheiMune/python-playground/blob/master/09_wordnet/wordnet_jp.py)***
+ Thanks.
  
  
 ## Notification
