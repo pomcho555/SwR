@@ -13,7 +13,8 @@ I'm afraid, it doesn't work well except Japanese text.
  
  ### Ohters
  We use wn_syns as synonym extracter.
- Here is repository ***(https://github.com/yoheiMune/python-playground/blob/master/09_wordnet/wordnet_jp.py)***
+ Here is repository 
+ ***(https://github.com/yoheiMune/python-playground/blob/master/09_wordnet/wordnet_jp.py)***
  
  Thanks.
  
