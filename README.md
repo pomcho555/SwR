@@ -12,10 +12,13 @@ I'm afraid, it doesn't work well except Japanese text.
  3. goi.csv(http://jhlee.sakura.ne.jp/JEL.html)
  
  ### Ohters
- We use wn_syns as synonym extracter.
+ I use wn_syns as synonym extracter.
  Here is a repository 
  
  ***(https://github.com/yoheiMune/python-playground/blob/master/09_wordnet/wordnet_jp.py)***
+ 
+ Then, I refered to and expanded this repository as WordPositionBasedSummarizer.
+ ***(https://gist.github.com/nkt1546789/5c52160f210df3c7724c)***
  
  Thanks.
  
