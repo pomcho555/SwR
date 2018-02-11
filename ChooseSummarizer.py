@@ -2,6 +2,7 @@
 # coding: utf-8 -*-
 
 import config
+import evaluate_text as evatxt
 #take Strategy-pattern in the code
 class ChooseSummarizer(object):
     def __init__(self, title, text, word_limit, summarizer, compression_rate):
@@ -42,7 +43,8 @@ class WordPositionBasedSummarizer(Summarizer):
 
         m = MeCab.Tagger("-Ochasen")
         m.parse("") #mecab-python3のunicodeエラー対策
-        word_limit = word_limit * compression_rate
+        word_limit = 0
+        word_limit = config.word_limit * compression_rate
 
         def sent_tokenize(text):
             #for python2.x
@@ -152,16 +154,23 @@ class WordPositionBasedSummarizer(Summarizer):
             length += len(sentences[index])
             print('word_counter:%s' % word_counter)
             print('sentences %s' % sentences)
-            if word_counter > word_limit:
+            print(word_limit)
+            if(word_counter > word_limit):
                 print('break')
                 break
             topics.append(index)
         topics = sorted(topics)
         text = "".join(["".join(sentences[topic]) for topic in topics])
-
+        print("summtext:%s" %text)
         return text
 
 def main(title, processed_text, word_limit, compression_rate):
+        config.pre_sentences = {}
+        config.pre_word_list = []
+        config.pre_token_dict = {}
+        config.suggest_words = {}
+        config.converted_words = {}
+        config.converted_sentences = {}
         choosesummarizer = ChooseSummarizer(title, processed_text, word_limit, WordPositionBasedSummarizer(), compression_rate)
         output_text = choosesummarizer.summarize()
         evatxt.evaluate_text(output_text)
@@ -171,6 +180,18 @@ def main(title, processed_text, word_limit, compression_rate):
         config.output_txt = output_text
         return output
 
+def excute(usr_level, compression_rate):
+    import config
+    import get_article_frmWiki as gaf
+    import evaluate_text as evatxt
+    text = ''
+    title = config.title
+    config.original_text = original_text
+    config.usr_level = usr_level
+    word_limit = len(original_text)
+    processed_text = gaf.text_preprocessing(original_text)
+    output1 = main(title, processed_text, word_limit, compression_rate)
+
 if __name__ == '__main__':
     import sys
     import get_article_frmWiki as gaf
@@ -178,18 +199,14 @@ if __name__ == '__main__':
     argv = sys.argv
     text = ''
     title = argv[1]
-    word_limit = 200
-    compression_rate = 1
+    # word_limit = 200
+    compression_rate = 0.3
 
     original_text = gaf.fetch_article(title)
     processed_text = gaf.text_preprocessing(original_text)
+    config.original_text = processed_text
+    word_limit = len(processed_text)
 
-    # choosesummarizer70 = ChooseSummarizer(title, processed_text, word_limit, WordPositionBasedSummarizer(), compression_rate)
-    # output_text = choosesummarizer.summarize()
-    # evatxt.evaluate_text(output_text)
-    # import WordChooser
-    # wordchooser = WordChooser.WordChooser(output_text, word_limit)
-    # output1 = wordchooser.choose_appropriate_word()
     output1 = main(title, processed_text, word_limit, compression_rate)
 
 

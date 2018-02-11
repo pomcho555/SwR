@@ -12,8 +12,6 @@ def fetch_article(query):
     response = sparql.query().convert()
     print(response)
     for result in response['results']['bindings']:
-        # print('Search_Result below!')
-        # print(result['abstract']['value'])
         text = result['abstract']['value']
     return text
 

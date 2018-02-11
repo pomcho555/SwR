@@ -16,6 +16,8 @@ def set_token_to_dict(text):
     token_dict = {}
     feature_array = []
     word_count = 0
+    config.pre_sentences = {}
+    print("docter")
     while node:
         try:
             feature_array = node.feature.split(",")
@@ -26,7 +28,8 @@ def set_token_to_dict(text):
             pass
         word_count += 1
         node = node.next
-    #print(token_dict)
+    print(config.pre_sentences)
+
 
     return token_dict
 
@@ -35,11 +38,9 @@ def classify_token_dict(target_dict):
     """
     classify tokens under a part of speech
     """
-    #picked_word_list = [i for i in target_dict]
     #extract noun, verb, adjective from dict
     picked_word_list = []
     try:
-        #picked_word_list = [i for i in target_dict if target_dict[i][0] == "名詞" or target_dict[i][0] == "動詞" or target_dict[i][0] == "形容詞"]
         print('==target_dict==')
         print(config.pre_sentences)
         if(len(config.pre_sentences) != 0):
@@ -47,14 +48,6 @@ def classify_token_dict(target_dict):
                 word = config.pre_sentences[i_id]['word']
                 if(config.pre_sentences[i_id]["word_class"] == "名詞"  or config.pre_sentences[i_id]["word_class"] == "形容詞" or config.pre_sentences[i_id]["word_class"] == "動詞" ):
                     config.suggest_words[word] = {id:i_id, 'level': 0}
-                # for word in config.pre_sentences[i_id]:
-                #     print(word['word'])
-                #     if(config.pre_sentences[i_id]["word_class"] == "名詞" or config.pre_sentences[i_id]["word_class"] == "動詞" or config.pre_sentences[i_id]["word_class"] == "形容詞"):
-                #         try:
-                #             config.suggest_words[word] = i_id
-                #         except KeyError:
-                #             print('KeyError')
-                #             pass
 
         else:
             for word in target_dict:
@@ -64,9 +57,10 @@ def classify_token_dict(target_dict):
         return 1
     except TypeError:
         return 1
-    print('選ばれたのは')
-    print(config.suggest_words)
-    print(picked_word_list)
+    # print('The word picked up is')
+    # print(config.suggest_words)
+    # print(picked_word_list)
+    # print(config.usr_level)
     if(len(config.suggest_words) != 0):
         picked_word_list = config.suggest_words
     return picked_word_list

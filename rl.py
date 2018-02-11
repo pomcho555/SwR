@@ -43,10 +43,10 @@ def excute():
         return q_table
 
     def do_action(action,usr_level,compression_rate, reward):
-        print('action')
-        print(action)
-        print(reward)
-        print(compression_rate)
+        # print('action')
+        # print(action)
+        # print(reward)
+        # print(compression_rate)
         if action==0:
             usr_level+=1
             compression_rate+=reward
@@ -67,8 +67,6 @@ def excute():
         if usr_level>7:usr_level=7
         if compression_rate<10:compression_rate=10
         if compression_rate>100:compression_rate=100
-        print('in_action')
-        print(compression_rate)
         return usr_level,compression_rate
 
     def create_fig(x,y,x_cap,y_cap):
@@ -106,7 +104,6 @@ def excute():
     usr_level = 7
     observation = compression_rate, usr_level
     state = digitize_state(observation)
-    print(digitize_state(observation))
     action = np.argmax(q_table[state])
 
 
@@ -175,7 +172,6 @@ def excute():
         y_3.append(compression_rate)
         print("total_reward:")
         print(total_reward_vec)
-        print(compression_rate)
 
         if(total_reward_vec.mean() >= goal_average_reward or finFlg == True or (reward+pre_reward)/2 >9):
             print('You are satisfied with this sentence:after Ep %d' % episode)

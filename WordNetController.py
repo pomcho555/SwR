@@ -5,6 +5,7 @@ from nltk.corpus import wordnet as wn
 import wn_syns
 import config
 import re
+import search_pos
 
 class WordNetController:
     def __init__(self, wordlist):
@@ -27,15 +28,14 @@ class WordNetController:
             #そこで、レスポンスが空なら漢字「蜜柑」等に変換して再度入力するぜよ
             if(re.match("[あ-ん|[一-龥]|[a-z]]", word) != None):
                 suggest_words = wn_syns.getSynonym(word)
-                print('I got synonym')
-                print(suggest_words)
-            #if(not suggest_words):
+                #品詞が変換対象と同じ語のみ抽出
+                #search_pos.extract_word(suggest_words,word)
             import TemplateSimplifier
-            usr_level = 1
-            #wordsimplifier = WordSimplifier.WordSimplifier(suggest_words, usr_level)
-            #leveled_synonyms = wordsimplifier.simplify('-n', self.wordlist[word])
+            usr_level = config.usr_level
+            print(usr_level)
             eachwordsimplifier = TemplateSimplifier.EachWordSimplifier(suggest_words, usr_level, self.wordlist[word]['level'])
             leveled_synonyms = eachwordsimplifier.simplify()
+
             print(leveled_synonyms)
 
             #今はテストのため類似度はオフ
@@ -73,14 +73,9 @@ class WordNetController:
             if(len(w) > 0):
                 config.target_word = w
                 config.converted_words[config.suggest_words[w][id]] = fetch_similar_word(w)
-        # for i_id in config.pre_sentences:
-        #     for word in config.pre_sentences[i_id]["word"]:
-        #         config.suggest_words[i_id] = fetch_similar_word(word)
-        #     print(config.suggest_words)
-
-
 
 if __name__ == '__main__':
+    config.usr_level = 5
     wordlist = ['リンゴ', '太陽', '蜜柑']
     wnc = WordNetController(wordlist)
     wnc.word_crawl()

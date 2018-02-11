@@ -17,7 +17,6 @@ class TemplateSimplifier(object):
         return dict which include a word and the level
         """
         words_level_dict = {}
-        print(self.__class__.__name__)
         if(self.__class__.__name__ == NormalSimplifier):
             words_level_dict = config.suggest_words
 
@@ -28,10 +27,8 @@ class TemplateSimplifier(object):
                 word_level = json.dict[word]
             except KeyError:
                 word_level = 7
-            # print('now is')
-            # print(word)
-            # print(word_level)
             words_level_dict = self.set_dict(word, word_level)
+        print(words_level_dict)
         return words_level_dict
 
     def read_dictionary(self):
@@ -76,16 +73,15 @@ class EachWordSimplifier(TemplateSimplifier):
         self.words_level_dict = {}
 
     def set_dict(self, word, word_level):
-        #convert target word to hiragana
-        if(self.original_word_level == 1):
-            self.words_level_dict[ch.convert_hira(config.target_word)] = 0
-            return self.words_level_dict
-        if(word_level < self.original_word_level):
-            self.words_level_dict[word] = word_level
+
+        if(self.original_word_level > config.usr_level):
+            #convert target word to hiragana
+            if(self.original_word_level == 1):
+                self.words_level_dict[ch.convert_hira(config.target_word)] = 0
+                return self.words_level_dict
+            if(word_level < config.usr_level):
+                self.words_level_dict[word] = word_level
         return self.words_level_dict
-
-
-
 
 if __name__ == '__main__':
     config.suggest_words = {'我': {id: 1, 'level': 0}, '迷宮': {id: 3, 'level': 0}, '名前': {id: 6, 'level': 0}}
@@ -96,6 +92,6 @@ if __name__ == '__main__':
     print(output)
 
     similar_array = ['吾れ', '吾', '主我', '自己', '我れ', '自我', '我', 'エゴ', '吾れ', '主観', '吾', '小生', '主我', '我れ', '自我', '我', 'エゴ']
-    eachwordsimplifier = EachWordSimplifier(similar_array, usr_level, 5)
+    eachwordsimplifier = EachWordSimplifier(similar_array, usr_level, 7)
     output2 = eachwordsimplifier.simplify()
     print(output2)
