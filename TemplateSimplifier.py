@@ -28,7 +28,6 @@ class TemplateSimplifier(object):
             except KeyError:
                 word_level = 7
             words_level_dict = self.set_dict(word, word_level)
-        print(words_level_dict)
         return words_level_dict
 
     def read_dictionary(self):
@@ -79,8 +78,7 @@ class EachWordSimplifier(TemplateSimplifier):
             if(self.original_word_level == 1):
                 self.words_level_dict[ch.convert_hira(config.target_word)] = 0
                 return self.words_level_dict
-            if(word_level < config.usr_level):
-                self.words_level_dict[word] = word_level
+            self.words_level_dict[word] = word_level
         return self.words_level_dict
 
 if __name__ == '__main__':
