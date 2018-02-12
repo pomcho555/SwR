@@ -49,7 +49,6 @@ class WordChooser:
         self.usr_level = config.usr_level
         wordsimplifier = TemplateSimplifier.NormalSimplifier(choosed_token_list, self.usr_level)
         words_level_dict = wordsimplifier.simplify()
-        print(words_level_dict)
         import WordNetController
         wordnetcontroller = WordNetController.WordNetController(words_level_dict)
         wordnetcontroller.word_crawl()
