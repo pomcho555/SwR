@@ -43,25 +43,41 @@ def excute():
         return q_table
 
     def do_action(action,usr_level,compression_rate, reward):
-        # print('action')
-        # print(action)
-        # print(reward)
-        # print(compression_rate)
+        level_weight = 0
+        if reward > 5:
+            level_weight = 2
+        else:
+            level_weight = 1
+        reward=reward*2
+
+
         if action==0:
-            usr_level+=1
+            usr_level+=level_weight
             compression_rate+=reward
         elif action == 1:
-            usr_level+=1
+            usr_level+=level_weight
             compression_rate-=reward
         elif action == 2:
-            usr_level-=1
+            usr_level-=level_weight
             compression_rate+=reward
         elif action == 3:
-            usr_level-=1
+            usr_level-=level_weight
             compression_rate-=reward
-            print(compression_rate)
-        else:
-            pass    #ues initial action
+        elif action == 4:
+            usr_level+=level_weight
+            compression_rate+=0
+        elif action == 5:
+            usr_level+=0
+            compression_rate+=reward
+        elif action == 6:
+            usr_level-=level_weight
+            compression_rate-=0
+        elif action == 7:
+            usr_level-=0
+            compression_rate-=reward
+        elif action == 8:
+            usr_level+=0
+            compression_rate+=0
 
         if usr_level<1:usr_level=1
         if usr_level>7:usr_level=7
@@ -84,12 +100,10 @@ def excute():
     y_2=[]
     y_3=[]
     y_4=[]
-    #max_number_of_steps = 200
-    #num_consecutive_iterations = 100
     num_episodes = 30
     goal_average_reward = 20
     num_dizitized = 91
-    num_actions = 4
+    num_actions = 9
     q_table = np.random.uniform(
         low=-1, high=1, size=(num_dizitized*7, num_actions))
     total_reward_vec = np.zeros(num_episodes)
@@ -114,9 +128,6 @@ def excute():
     title = "強化学習"
     title = argv[1]
     original_text = gaf.fetch_article(title)
-    # word_limit = 200
-
-
 
     config.original_text = original_text
     processed_text = gaf.text_preprocessing(original_text)
