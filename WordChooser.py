@@ -44,8 +44,6 @@ class WordChooser:
         #a list of a converted target token
         choosed_token_list = stt.classify_token_dict(token_dict)
         import TemplateSimplifier
-        #fixed level 1 at test
-        config.usr_level = 1
         self.usr_level = config.usr_level
         wordsimplifier = TemplateSimplifier.NormalSimplifier(choosed_token_list, self.usr_level)
         words_level_dict = wordsimplifier.simplify()
